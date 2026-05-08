@@ -1,4 +1,3 @@
-
 from telegram import (
     Update,
     InlineKeyboardButton,
@@ -21,27 +20,14 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from datetime import datetime, timedelta
 import sqlite3
 
-# =========================
-# TOKEN
-# =========================
 TOKEN = "8492680613:AAFJe_Y6rVVi5YZPT3UUtcOp22UaG0Nwuog"
 
-# =========================
-# ADMIN
-# =========================
 ADMIN_USERNAME = "@buchen_ko"
 
-# =========================
-# ФОТО
-# Встав сюди свої фото
-# =========================
 PHOTO_1 = ""
 PHOTO_2 = ""
 PHOTO_3 = ""
 
-# =========================
-# ПОСЛУГИ
-# =========================
 services = {
     "Манікюр без нарощування": {
         "price": "600 грн",
@@ -57,9 +43,6 @@ services = {
     }
 }
 
-# =========================
-# ЧАС
-# =========================
 TIME_SLOTS = [
     "10:00",
     "12:00",
@@ -67,14 +50,10 @@ TIME_SLOTS = [
     "16:00"
 ]
 
-# =========================
-# СТАНИ
-# =========================
+
 SERVICE, DATE, TIME, NAME, PHONE, CONFIRM = range(6)
 
-# =========================
-# БАЗА ДАНИХ
-# =========================
+
 conn = sqlite3.connect('appointments.db', check_same_thread=False)
 cursor = conn.cursor()
 
@@ -91,9 +70,7 @@ CREATE TABLE IF NOT EXISTS appointments (
 
 conn.commit()
 
-# =========================
-# START
-# =========================
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     keyboard = []
@@ -112,9 +89,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     return SERVICE
 
-# =========================
-# ВИБІР ПОСЛУГИ
-# =========================
+
 async def choose_service(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     query = update.callback_query
@@ -146,9 +121,7 @@ async def choose_service(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     return DATE
 
-# =========================
-# ДАТИ
-# =========================
+
 async def choose_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     query = update.callback_query
@@ -176,9 +149,7 @@ async def choose_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     return TIME
 
-# =========================
-# ЧАС
-# =========================
+
 async def choose_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     query = update.callback_query
@@ -223,9 +194,7 @@ async def choose_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     return NAME
 
-# =========================
-# ІМʼЯ
-# =========================
+
 async def get_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if update.callback_query:
@@ -241,9 +210,7 @@ async def get_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         return PHONE
 
-# =========================
-# ТЕЛЕФОН
-# =========================
+
 async def get_phone(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     context.user_data['name'] = update.message.text
@@ -266,9 +233,7 @@ async def get_phone(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     return CONFIRM
 
-# =========================
-# ПІДТВЕРДЖЕННЯ
-# =========================
+
 async def confirm(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     phone = update.message.contact.phone_number
@@ -303,9 +268,7 @@ async def confirm(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     return ConversationHandler.END
 
-# =========================
-# ЗБЕРЕЖЕННЯ
-# =========================
+
 async def save_appointment(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     query = update.callback_query
@@ -351,9 +314,7 @@ async def save_appointment(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except:
         pass
 
-# =========================
-# НАЗАД
-# =========================
+
 async def start_again(query, context):
 
     keyboard = []
@@ -372,9 +333,7 @@ async def start_again(query, context):
 
     return SERVICE
 
-# =========================
-# НАГАДУВАННЯ
-# =========================
+
 async def reminders(context: ContextTypes.DEFAULT_TYPE):
 
     now = datetime.now()
@@ -388,9 +347,7 @@ async def reminders(context: ContextTypes.DEFAULT_TYPE):
         (date, time)
     )
 
-# =========================
-# APP
-# =========================
+
 app = ApplicationBuilder().token(TOKEN).build()
 
 conv_handler = ConversationHandler(
@@ -415,4 +372,3 @@ scheduler.start()
 print("Бот запущений ❤️")
 
 app.run_polling()
-```
