@@ -1,5 +1,4 @@
 
-```python
 from telegram import (
     Update,
     InlineKeyboardButton,
@@ -25,7 +24,7 @@ import sqlite3
 # =========================
 # TOKEN
 # =========================
-TOKEN = "ВСТАВ_СВІЙ_НОВИЙ_TOKEN"
+TOKEN = "8492680613:AAFJe_Y6rVVi5YZPT3UUtcOp22UaG0Nwuog"
 
 # =========================
 # ADMIN
